@@ -1,0 +1,7 @@
+matplotlib @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-suite_1617212793321/work
+numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1616933153098/work
+pandas==1.2.4
+Pillow @ file:///home/conda/feedstock_root/build_artifacts/pillow_1617818063846/work
+scikit-image==0.18.1
+scikit-learn @ file:///home/conda/feedstock_root/build_artifacts/scikit-learn_1619628586492/work
+scipy @ file:///home/conda/feedstock_root/build_artifacts/scipy_1619561901336/work
