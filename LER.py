@@ -3,6 +3,8 @@ import numpy as np
 import cv2 #(OpenCV3)
 from scipy.interpolate import interp1d
 from sklearn import linear_model
+import matplotlib.pyplot as plt
+from PIL import Image
 
 class edge_roughness:
     
@@ -15,8 +17,8 @@ class edge_roughness:
         
         X = np.linspace(0, im_wdth, num=bin_im.shape[1], endpoint=True) #create the X data array, width of image and number pixels
         Y = self.binary_imsearch(255, bin_im) #find the line edge values
-        #plt.plot(X, Y, 'r')
-        #plt.show()
+        plt.plot(X, Y, 'r')
+        plt.show()
         
         Xcln, Ycln = self.extract_clean(X, Y, thresh) #extract the cleaned data from the raw edge data
         
@@ -24,7 +26,21 @@ class edge_roughness:
         
         return Xcln, Ycln, freq, FourierPow
         
+    def analyse_binary(self, binary_img, im_width, thresh):
         
+        bin_im = 255 * (np.array(binary_img) > 125)
+
+        X = np.linspace(0, im_width, num=bin_im.shape[1], endpoint=True) #create the X data array, width of image and number pixels
+        Y = self.binary_imsearch(255, bin_im) #find the line edge values
+        plt.plot(X, Y, 'r')
+        plt.show()
+        
+        Xcln, Ycln = self.extract_clean(X, Y, thresh) #extract the cleaned data from the raw edge data
+        
+        freq, FourierPow = self.fourier_power(Xcln, Ycln)
+        
+        return Xcln, Ycln, freq, FourierPow
+
     # binarize the image    
     def binarization(self, image):
        
@@ -108,7 +124,7 @@ class edge_roughness:
         XdataClean = Xdata[s<n]
         
         #Interpolate the data to put it on an even mesh
-        finterp = interp1d(XdataClean,YdataClean)
+        finterp = interp1d(XdataClean.squeeze(),YdataClean.squeeze())
         xnew = np.linspace(0, max(Xdata), num=600, endpoint=True)
         ynew = finterp(xnew)  
         
